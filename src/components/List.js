@@ -28,14 +28,14 @@ function List() {
         </thead>
         <tbody>
           {entries.map(entry => (
-            <tr key={entry.id}>
+            <tr key={entry.id.toString()}>
               <td>{entry.name}</td>
               <td>{entry.message}</td>
               <td>
                 <Link className="btn btn-primary mr-2" to={`/edit/${entry.id}`}>
                   Edit
                 </Link>
-                <Button className="btn btn-danger">Delete</Button>
+                <Button variant="danger">Delete</Button>
               </td>
             </tr>
           ))}
