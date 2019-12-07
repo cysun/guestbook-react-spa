@@ -4,7 +4,11 @@ const initialState = {
   entries: []
 };
 
-// Remember that reducer does NOT mutate state or the action payload
+// Note that reducer does NOT mutate state or the action payload. See
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+// and https://www.samanthaming.com/tidbits/70-3-ways-to-clone-objects for how
+// the Spread syntax is used for cloning objects and arrays.
+
 export default function entries(state = initialState, action) {
   switch (action.type) {
     case Action.TYPE_SET_ENTRIES:
@@ -13,16 +17,14 @@ export default function entries(state = initialState, action) {
         entries: [...action.entries]
       };
     case Action.TYPE_ADD_ENTRY:
-      // There are two Spread operators here. The first one clones
-      // the entries array, the second one clones the entry object,
-      // and together they create a new entries array.
-      let newEntries = [...state.entries, { ...action.entry }];
-      // Another Spread here. It clones state, then sets the value
-      // of entries to newEntries (similar to merging two objects
-      // with spread syntax {...obj1, ...obj2})
       return {
         ...state,
-        entries: newEntries
+        entries: [...state.entries, { ...action.entry }]
+      };
+    case Action.TYPE_DELETE_ENTRY:
+      return {
+        ...state,
+        entries: state.entries.filter(entry => entry.id !== action.entryId)
       };
     default:
       return state;

@@ -5,13 +5,20 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 
+import axios from "axios";
+import { deleteEntry } from "../reduxActions";
+
 const mapStateToProps = state => {
   return {
     entries: state.entries
   };
 };
 
-let GuestBook = ({ entries }) => {
+let GuestBook = ({ entries, dispatch }) => {
+  const deleteEntryHandler = entryId => {
+    axios.delete(`/api/${entryId}`).then(() => dispatch(deleteEntry(entryId)));
+  };
+
   return (
     <>
       <Breadcrumb className="my-2">
@@ -34,7 +41,12 @@ let GuestBook = ({ entries }) => {
                 <Link className="btn btn-primary mr-2" to={`/edit/${entry.id}`}>
                   Edit
                 </Link>
-                <Button variant="danger">Delete</Button>
+                <Button
+                  variant="danger"
+                  onClick={() => deleteEntryHandler(entry.id)}
+                >
+                  Delete
+                </Button>
               </td>
             </tr>
           ))}
