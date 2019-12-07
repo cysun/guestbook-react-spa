@@ -12,6 +12,9 @@ const initialState = {
 export default function entries(state = initialState, action) {
   switch (action.type) {
     case Action.TYPE_SET_ENTRIES:
+      // We could simply return {entries: [...action.entries]} since state only
+      // has one property entries, but by including ...state, we also include
+      // other properties of state if it has any.
       return {
         ...state,
         entries: [...action.entries]
@@ -20,6 +23,15 @@ export default function entries(state = initialState, action) {
       return {
         ...state,
         entries: [...state.entries, { ...action.entry }]
+      };
+    case Action.TYPE_EDIT_ENTRY:
+      let newEntries = [...state.entries];
+      let entryToEdit = newEntries.find(entry => entry.id === action.entry.id);
+      entryToEdit.name = action.entry.name;
+      entryToEdit.message = action.entry.message;
+      return {
+        ...state,
+        entries: newEntries
       };
     case Action.TYPE_DELETE_ENTRY:
       return {

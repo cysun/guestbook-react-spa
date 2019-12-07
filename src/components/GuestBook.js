@@ -8,12 +8,6 @@ import Breadcrumb from "react-bootstrap/Breadcrumb";
 import axios from "axios";
 import { deleteEntry } from "../reduxActions";
 
-const mapStateToProps = state => {
-  return {
-    entries: state.entries
-  };
-};
-
 let GuestBook = ({ entries, dispatch }) => {
   const deleteEntryHandler = entryId => {
     axios.delete(`/api/${entryId}`).then(() => dispatch(deleteEntry(entryId)));
@@ -61,6 +55,12 @@ let GuestBook = ({ entries, dispatch }) => {
 
 GuestBook.defaultProps = {
   entries: []
+};
+
+const mapStateToProps = state => {
+  return {
+    entries: state.entries
+  };
 };
 
 GuestBook = connect(mapStateToProps)(GuestBook);

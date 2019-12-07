@@ -6,6 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 
 import GuestBook from "./components/GuestBook";
 import AddEntry from "./components/AddEntry";
+import EditEntry from "./components/EditEntry";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/add">
             <AddEntry />
           </Route>
+          <Route path="/edit/:id" component={EditEntry} />
           <Route path="/">
             <GuestBook />
           </Route>
