@@ -1,12 +1,11 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
-import List from "./components/List";
-import Add from "./components/Add";
+import GuestBook from "./components/GuestBook";
+import AddEntry from "./components/AddEntry";
 
 function App() {
   return (
@@ -17,10 +16,10 @@ function App() {
         </Navbar>
         <Switch>
           <Route path="/add">
-            <Add />
+            <AddEntry />
           </Route>
           <Route path="/">
-            <List />
+            <GuestBook />
           </Route>
         </Switch>
       </Container>

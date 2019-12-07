@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
-
+import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+
 import Button from "react-bootstrap/Button";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 
-import axios from "axios";
+const mapStateToProps = state => {
+  return {
+    entries: state.entries
+  };
+};
 
-function List() {
-  const [entries, setEntries] = useState([]);
-
-  useEffect(() => {
-    axios.get("/api").then(res => setEntries(res.data));
-  }, []);
-
+let GuestBook = ({ entries }) => {
   return (
     <>
       <Breadcrumb className="my-2">
@@ -46,6 +45,12 @@ function List() {
       </Link>
     </>
   );
-}
+};
 
-export default List;
+GuestBook.defaultProps = {
+  entries: []
+};
+
+GuestBook = connect(mapStateToProps)(GuestBook);
+
+export default GuestBook;

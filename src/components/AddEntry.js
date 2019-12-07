@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import Button from "react-bootstrap/Button";
@@ -7,8 +8,9 @@ import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 
 import axios from "axios";
+import { addEntry } from "../reduxActions";
 
-function Add() {
+let AddEntry = ({ dispatch }) => {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const history = useHistory();
@@ -20,7 +22,10 @@ function Add() {
         name,
         message
       })
-      .then(history.push("/"));
+      .then(res => {
+        dispatch(addEntry(res.data));
+        history.push("/");
+      });
   };
 
   return (
@@ -52,6 +57,8 @@ function Add() {
       </Form>
     </>
   );
-}
+};
 
-export default Add;
+AddEntry = connect()(AddEntry);
+
+export default AddEntry;
